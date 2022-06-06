@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/EulerGraph.png</file>
+        <file>img/comingSoon.png</file>
+        <file>img/icon.png</file>
+        <file>img/down_arrow.png</file>
+        <file>img/up_arrow.png</file>
+        <file>img/check.png</file>
+        <file>img/pause.png</file>
+        <file>img/resume.png</file>
+        <file>img/fireworks.gif</file>
+    </qresource>
+</RCC>
