@@ -27,7 +27,7 @@ public:
     void appendEdgeShape(EdgeShape* point); // adds an EdgeShape (QGraphicsLineItem) each time it's created to this scene list
 
     bool m_clickByClikMode;
-    void resetDrawing(); // removes all lines drawn
+    void resetDrawing(int deleteAllOrOne); // removes all lines drawn
     void clean();// cleans all items, vertexes, magneted points...
     void drawCurrentLine(QGraphicsSceneMouseEvent *event);
     uint m_currentStage; // current number of stage (level)

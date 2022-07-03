@@ -4,11 +4,14 @@
 #include "edge.h"
 #include "vertex.h"
 #include <QGraphicsView>
-
-QColor EGScene::s_lineColor =  QColor( Qt::GlobalColor::darkBlue ) ;
+#include <iostream>
+QColor EGScene::s_lineColor =  QColor( Qt::GlobalColor::black ) ;
 const qreal EGScene::s_lineWidth = 9. ;
 const QPointF EGScene::s_forbiddenPoint = QPointF(-52.365 , -52.365) ;
-
+using namespace std;
+int x_firtsVertexDeletedLine = 0;
+int y_firtsVertexDeletedLine = 0;
+bool isReset = false;
 EGScene::EGScene(QObject * parent):QGraphicsScene(parent)
 {
     setSceneRect(-350,-350,700,700);
@@ -22,8 +25,9 @@ EGScene::EGScene(QObject * parent):QGraphicsScene(parent)
 
 EGScene::~EGScene()
 {
-    qDeleteAll(m_lineList);
-    m_lineList.clear();
+
+     qDeleteAll(m_lineList);
+     m_lineList.clear();
     if( tempDrawingLine!= nullptr)
     {
         delete tempDrawingLine;
@@ -40,24 +44,40 @@ void EGScene::appendEdgeShape(EdgeShape *point)
 {
     m_edgesShapesList.append(point);
 }
-
-void EGScene::resetDrawing()
+///
+/// \brief EGScene::resetDrawing // dabei haben wir zwei resetOptionen, das erste ist alle Kantenbelgegungen zu löschen, das zweite ist nur die letzte Kantenbelegung zu löschen.
+/// \param allOrOne: löschng alle Kantenbelegungen falls 1 wenn 2 nur das letzte Kantenbelgung Löschen
+void EGScene::resetDrawing(int allOrLast)
 {
-    qDeleteAll(m_lineList);
-    m_lineList.clear();
-    m_edgesDrawnList.clear();
+    if(allOrLast == 1){ // falls 1 dann werden alle Belegungen gelöscht
+        qDeleteAll(m_lineList); //  alle angezeigten Linen Lösche
+        m_lineList.clear();     // speicherplatz freigabe
+        m_edgesDrawnList.clear();   //  alle Belgungen der Kanten lösche
+         m_currentLine = 0;         //  der Line auf der Anfang setzten
+    }
+    else if(allOrLast == 2){
+        int sizeabsteigend = (m_lineList.size()-1); // size -1 um auf den letzten Elemnt zugreifen zu können
+        if(!m_lineList.empty()){       // nur falls m_lineList nicht leer ist
+            //  die x und y Koordinaten der Anfangsknote der zu löschenden Kantenbelegung speichern, damit der Spieler bei den gespeicherten Koortdinaten anfängt.
+            x_firtsVertexDeletedLine = m_edgesDrawnList[sizeabsteigend].m_theOne.m_x;
+            y_firtsVertexDeletedLine = m_edgesDrawnList[sizeabsteigend].m_theOne.m_y;
+            delete m_lineList[sizeabsteigend]; // die letzte angezeigte Line löschen
+            m_lineList.erase(m_lineList.cbegin()+sizeabsteigend);   //  angezeigte Line aus der Liste entfernen
+            m_edgesDrawnList.erase(m_edgesDrawnList.cbegin()+sizeabsteigend);   // Entfernung der Belgung der Kante aus der Edges Liste
+        }
+         m_currentLine = sizeabsteigend; // Die aktuelle Line auf das vor Letzte Line setzen
+    }
     if( tempDrawingLine!= nullptr)
     {
-        delete tempDrawingLine;
+        delete tempDrawingLine; // Löschen der tempöre Line
         tempDrawingLine = nullptr;
     }
-    m_currentLine = 0;
     emit reseted();
 }
 
 void EGScene::clean()
 {
-    resetDrawing();
+    resetDrawing(1); // 1 wird übergeben um alle Belegungen der Kanten zu löschen.
     qDeleteAll(m_pointsShapesList);
     m_pointsShapesList.clear();
     qDeleteAll(m_edgesShapesList);
@@ -65,8 +85,9 @@ void EGScene::clean()
     tryDrawing = false;
     isAttached = false;
     isFinishing = false;
-    for(QGraphicsItem * it : items())
+    for(QGraphicsItem * it : items()){
         removeItem(it);
+    }
 }
 
 void EGScene::drawCurrentLine(QGraphicsSceneMouseEvent *event)
@@ -82,37 +103,69 @@ void EGScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(isFinishing)
         return;
-
-    if(event->button() != Qt::LeftButton)
+    if(event->button() == Qt::RightButton)
     {
-        resetDrawing();
-        emit stepedUp(m_currentLine, m_edgesShapesList.size());
-        tryDrawing = false;
-        isAttached = false;
-        return;
-    }
-
-    tryDrawing = true;
-    QPointF computedMagnetedVertex = findMagnetedVertex(event);
-
-    if(computedMagnetedVertex != s_forbiddenPoint)// we are near a vertex
-    {
-        if( !isAttached )
-        {
-            origPoint = computedMagnetedVertex;
-            isAttached = true;
+        if(!m_lineList.empty()){
+            resetDrawing(2); // wir übergeben 2 um die letzte Belgung der Kante zu löschen
+            emit stepedUp(m_currentLine, m_edgesShapesList.size());
+            tryDrawing = false;
+            isAttached = false;
+            isReset = true;
+           //return; wir löschen return damit dierkt ein line aus der Anfangsknote angezeigt wird ohne den linken maustaste zu drücken
         }
-        if( computedMagnetedVertex != origPoint)
-            checkAndDrawPermanentLine(event,computedMagnetedVertex);
+        else if(m_lineList.empty()){    // für den fall das kein Kanten belegt worden sind
+            resetDrawing(1);
+            emit stepedUp(m_currentLine, m_edgesShapesList.size());
+            tryDrawing = false;
+            isAttached = false;
+            isReset = false;    // ist false weil wir in dem fall nichts gelöscht haben und dadurch fängen wir bei der erste Knote an
+            return; // wir lassen return damit wir die Anfangsknote die wir auswählen wollen anklicken zu müssen. um diese zu belegen, sonst wird auf die Knote automatisch gederückt.
+        }
+    }
+    QPointF computedMagnetedVertex;
+    if(isReset == true){
+        computedMagnetedVertex = QPointF(x_firtsVertexDeletedLine, y_firtsVertexDeletedLine); // mit dem Kordinaten der anfangsknote der gelöschte Kantenbelegung inizializieren
+        tryDrawing = true;
+        if(computedMagnetedVertex != s_forbiddenPoint) // we are near a vertex
+        {
+            if( !isAttached )
+            {
+                origPoint = computedMagnetedVertex;
+                isAttached = true;
+            }
+            if( computedMagnetedVertex == origPoint) // damit der Line bei den letzten Knoten anfängt
+                checkAndDrawPermanentLine(event,computedMagnetedVertex);
+            else
+                drawCurrentLine(event);
+        }
         else
-            drawCurrentLine(event);
+        {
+            if(isAttached )
+                drawCurrentLine(event);
+        }
+        isReset = false;
     }
-    else
-    {
-        if(isAttached )
-            drawCurrentLine(event);
+    if(isReset == false){
+        computedMagnetedVertex = findMagnetedVertex(event);
+        tryDrawing = true;
+        if(computedMagnetedVertex != s_forbiddenPoint)// we are near a vertex
+        {
+            if( !isAttached )
+            {
+                origPoint = computedMagnetedVertex;
+                isAttached = true;
+            }
+            if( computedMagnetedVertex != origPoint)
+                checkAndDrawPermanentLine(event,computedMagnetedVertex);
+            else
+                drawCurrentLine(event);
+        }
+        else
+        {
+            if(isAttached )
+                drawCurrentLine(event);
+        }
     }
-    //}
     QGraphicsScene::mousePressEvent(event);
 }
 
