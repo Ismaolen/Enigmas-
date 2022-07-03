@@ -1,26 +1,28 @@
 #include "advancedpointshape.h"
 
-QColor AdvancedPointShape::s_defaultColor =  QColor( Qt::GlobalColor::black ) ;
+/// In diesem Ort können wir die Farbe die Knoten änderne
+//QColor AdvancedPointShape::s_defaultColor =  QColor( Qt::GlobalColor::black ) ;
 double AdvancedPointShape::s_centralDiameter = 20. ;
 double AdvancedPointShape::s_ringDiameter = 30. ;
 double AdvancedPointShape::s_maxDiameter = 30. ;
 QColor AdvancedPointShape::s_colorAfterAnim = QColor( 70,85,150 ) ;
 qreal AdvancedPointShape::s_scaleAfterAnim = 1.3 ;
 
-AdvancedPointShape::AdvancedPointShape(EGScene *scene, Vertex vertex):QObject(),QGraphicsItem(),m_x(vertex.m_x),
-    m_y(vertex.m_y),m_scene(scene)
+AdvancedPointShape::AdvancedPointShape(EGScene *scene, Vertex vertex, const QColor &color):QObject(),QGraphicsItem(),m_x(vertex.m_x),
+    m_y(vertex.m_y),m_scene(scene), s_defaultColor(color)
 {
     setAcceptHoverEvents(true);
     if(m_scene != nullptr)
     {
         m_centralPoint = QSharedPointer<QGraphicsEllipseItem>( m_scene->addEllipse(m_x-s_centralDiameter/2.,m_y-s_centralDiameter/2.,
-                                                         s_centralDiameter,s_centralDiameter,QPen(s_defaultColor),QBrush(s_defaultColor)) );
+                                                         s_centralDiameter,s_centralDiameter,QPen(color),QBrush(color)) );
         m_ring = QSharedPointer<QGraphicsEllipseItem>( m_scene->addEllipse(m_x-s_ringDiameter/2.,m_y-s_ringDiameter/2.,
-                                                         s_ringDiameter,s_ringDiameter,QPen(s_defaultColor),QBrush()) );
+                                                         s_ringDiameter,s_ringDiameter,QPen(color),QBrush()) );
         m_scene->appendPointShape(this);
     }
     setScale(1.);
-    setColor(s_defaultColor);
+    setColor(color);
+
 }
 
 AdvancedPointShape::~AdvancedPointShape()
@@ -49,7 +51,7 @@ void AdvancedPointShape::setColor(const QColor &color)
 {
     m_color = color;
     m_centralPoint->setPen(QPen(m_color));
-    m_centralPoint->setBrush(QBrush(m_color));
+    m_centralPoint->setBrush(QBrush(m_color)); ///// in diese Zeile können wir
     m_ring->setPen(QPen(m_color));
 }
 

@@ -25,14 +25,14 @@ public:
     QColor m_color;
     qreal m_scale;
 
-    static QColor s_defaultColor;
+    QColor s_defaultColor;
     static double s_centralDiameter;
     static double s_ringDiameter;
     static double s_maxDiameter;
     static QColor s_colorAfterAnim;
     static qreal s_scaleAfterAnim;
 
-    AdvancedPointShape(EGScene *scene = nullptr, Vertex vertex = Vertex());
+    AdvancedPointShape(EGScene *scene = nullptr, Vertex vertex = Vertex(), const QColor &color =QColor());/////////////////////////////////////
     ~AdvancedPointShape();
     bool operator==(const AdvancedPointShape &other) const;
     bool operator!=(const AdvancedPointShape &other) const;
