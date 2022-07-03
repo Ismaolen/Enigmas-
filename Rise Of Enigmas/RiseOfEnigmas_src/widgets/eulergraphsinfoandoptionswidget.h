@@ -25,6 +25,7 @@ signals:
     void chooseEGlineColorRequest();
     void magnetModeStateChanged(int);
     void translateInstructionsRequest();
+    void ScoreInfromation();////////////////////////7/
 protected:
     void changeEvent(QEvent* event) override;
 private:
