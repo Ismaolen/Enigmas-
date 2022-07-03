@@ -28,6 +28,7 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QHBoxLayout *horizontalLayout;
     QLabel *EGstateLabel;
+    QPushButton *EGInformationButton;
     QSpacerItem *horizontalSpacer;
     QCheckBox *EGmagnetMode;
     QSpacerItem *horizontalSpacer_2;
@@ -47,6 +48,7 @@ public:
         horizontalLayout_3 = new QHBoxLayout(EGInfoAndOptionsMainWidget);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         EGstateLabel = new QLabel(EGInfoAndOptionsMainWidget);
         EGstateLabel->setObjectName(QString::fromUtf8("EGstateLabel"));
@@ -55,13 +57,20 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(EGstateLabel->sizePolicy().hasHeightForWidth());
         EGstateLabel->setSizePolicy(sizePolicy);
-        EGstateLabel->setMinimumSize(QSize(500, 0));
+        EGstateLabel->setMinimumSize(QSize(300, 0));
+        EGstateLabel->setMaximumSize(QSize(0, 16777215));
         QFont font;
         font.setPointSize(14);
         EGstateLabel->setFont(font);
         EGstateLabel->setWordWrap(true);
 
         horizontalLayout->addWidget(EGstateLabel);
+
+        EGInformationButton = new QPushButton(EGInfoAndOptionsMainWidget);
+        EGInformationButton->setObjectName(QString::fromUtf8("EGInformationButton"));
+        EGInformationButton->setMinimumSize(QSize(100, 50));
+
+        horizontalLayout->addWidget(EGInformationButton);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -124,6 +133,7 @@ public:
     {
         EulerGraphsInfoAndOptionsWidget->setWindowTitle(QCoreApplication::translate("EulerGraphsInfoAndOptionsWidget", "Form", nullptr));
         EGstateLabel->setText(QString());
+        EGInformationButton->setText(QCoreApplication::translate("EulerGraphsInfoAndOptionsWidget", "ScoreInformation", nullptr));
         EGmagnetMode->setText(QCoreApplication::translate("EulerGraphsInfoAndOptionsWidget", "Magnetic Mode", nullptr));
         EGchangeLineColorButton->setText(QCoreApplication::translate("EulerGraphsInfoAndOptionsWidget", "Change lines' color...", nullptr));
         EGresetButton->setText(QCoreApplication::translate("EulerGraphsInfoAndOptionsWidget", "Reset Levels", nullptr));

@@ -24,8 +24,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    const uint offsetsAndSize[42];
-    char stringdata0[299];
+    const uint offsetsAndSize[22];
+    char stringdata0[154];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -39,29 +39,15 @@ QT_MOC_LITERAL(37, 23), // "changeToEnglishLanguage"
 QT_MOC_LITERAL(61, 22), // "changeToFrenchLanguage"
 QT_MOC_LITERAL(84, 7), // "onAbout"
 QT_MOC_LITERAL(92, 13), // "onSourcesLink"
-QT_MOC_LITERAL(106, 13), // "goToHomehPage"
-QT_MOC_LITERAL(120, 18), // "goToEulerGraphPage"
-QT_MOC_LITERAL(139, 15), // "applyStyleSheet"
-QT_MOC_LITERAL(155, 17), // "chooseEGlineColor"
-QT_MOC_LITERAL(173, 20), // "resetEulerGraphScore"
-QT_MOC_LITERAL(194, 18), // "changeEGMagnetMode"
-QT_MOC_LITERAL(213, 6), // "status"
-QT_MOC_LITERAL(220, 10), // "EGStepedUp"
-QT_MOC_LITERAL(231, 4), // "step"
-QT_MOC_LITERAL(236, 5), // "total"
-QT_MOC_LITERAL(242, 17), // "setNextEulerGraph"
-QT_MOC_LITERAL(260, 16), // "EGstartChallenge"
-QT_MOC_LITERAL(277, 21) // "translateInstructions"
+QT_MOC_LITERAL(106, 12), // "goToHomePage"
+QT_MOC_LITERAL(119, 18), // "goToEulerGraphPage"
+QT_MOC_LITERAL(138, 15) // "applyStyleSheet"
 
     },
     "MainWindow\0EGlineColorRequest\0\0color\0"
     "changeToEnglishLanguage\0changeToFrenchLanguage\0"
-    "onAbout\0onSourcesLink\0goToHomehPage\0"
-    "goToEulerGraphPage\0applyStyleSheet\0"
-    "chooseEGlineColor\0resetEulerGraphScore\0"
-    "changeEGMagnetMode\0status\0EGStepedUp\0"
-    "step\0total\0setNextEulerGraph\0"
-    "EGstartChallenge\0translateInstructions"
+    "onAbout\0onSourcesLink\0goToHomePage\0"
+    "goToEulerGraphPage\0applyStyleSheet"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,7 +57,7 @@ static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -79,23 +65,16 @@ static const uint qt_meta_data_MainWindow[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,  104,    2, 0x06,    1 /* Public */,
+       1,    1,   62,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    0,  107,    2, 0x0a,    3 /* Public */,
-       5,    0,  108,    2, 0x0a,    4 /* Public */,
-       6,    0,  109,    2, 0x0a,    5 /* Public */,
-       7,    0,  110,    2, 0x0a,    6 /* Public */,
-       8,    0,  111,    2, 0x0a,    7 /* Public */,
-       9,    0,  112,    2, 0x0a,    8 /* Public */,
-      10,    0,  113,    2, 0x0a,    9 /* Public */,
-      11,    0,  114,    2, 0x0a,   10 /* Public */,
-      12,    0,  115,    2, 0x0a,   11 /* Public */,
-      13,    1,  116,    2, 0x0a,   12 /* Public */,
-      15,    2,  119,    2, 0x0a,   14 /* Public */,
-      18,    0,  124,    2, 0x0a,   17 /* Public */,
-      19,    0,  125,    2, 0x0a,   18 /* Public */,
-      20,    0,  126,    2, 0x0a,   19 /* Public */,
+       4,    0,   65,    2, 0x0a,    3 /* Public */,
+       5,    0,   66,    2, 0x0a,    4 /* Public */,
+       6,    0,   67,    2, 0x0a,    5 /* Public */,
+       7,    0,   68,    2, 0x0a,    6 /* Public */,
+       8,    0,   69,    2, 0x0a,    7 /* Public */,
+       9,    0,   70,    2, 0x0a,    8 /* Public */,
+      10,    0,   71,    2, 0x0a,    9 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QColor,    3,
@@ -105,13 +84,6 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   14,
-    QMetaType::Void, QMetaType::UInt, QMetaType::UInt,   16,   17,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -130,16 +102,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->changeToFrenchLanguage(); break;
         case 3: _t->onAbout(); break;
         case 4: _t->onSourcesLink(); break;
-        case 5: _t->goToHomehPage(); break;
+        case 5: _t->goToHomePage(); break;
         case 6: _t->goToEulerGraphPage(); break;
         case 7: _t->applyStyleSheet(); break;
-        case 8: _t->chooseEGlineColor(); break;
-        case 9: _t->resetEulerGraphScore(); break;
-        case 10: _t->changeEGMagnetMode((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 11: _t->EGStepedUp((*reinterpret_cast< std::add_pointer_t<uint>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint>>(_a[2]))); break;
-        case 12: _t->setNextEulerGraph(); break;
-        case 13: _t->EGstartChallenge(); break;
-        case 14: _t->translateInstructions(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -162,7 +127,7 @@ const QMetaObject MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
 , QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QColor, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<uint, std::false_type>, QtPrivate::TypeAndForceComplete<uint, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -189,13 +154,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 15;
+        _id -= 8;
     }
     return _id;
 }

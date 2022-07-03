@@ -4,6 +4,7 @@ debug/edgeshape.o
 debug/egscene.o
 debug/eulergraphinteract.o
 debug/vertex.o
+debug/eulergraphspage.o
 debug/main.o
 debug/mainwindow.o
 debug/congradulationdialog.o
@@ -21,6 +22,7 @@ debug/moc_edgeshape.o
 debug/moc_egscene.o
 debug/moc_eulergraphinteract.o
 debug/moc_vertex.o
+debug/moc_eulergraphspage.o
 debug/moc_mainwindow.o
 debug/moc_congradulationdialog.o
 debug/moc_congradulationlabel.o

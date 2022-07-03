@@ -11,6 +11,9 @@ EulerGraphsInfoAndOptionsWidget::EulerGraphsInfoAndOptionsWidget(QWidget *parent
     QObject::connect(ui->EGchangeLineColorButton, SIGNAL(released()), this, SIGNAL(chooseEGlineColorRequest()));
     QObject::connect(ui->EGhomeButton, SIGNAL(released()), this, SIGNAL(homePageRequest()));
     QObject::connect(ui->EGresetButton, SIGNAL(released()), this, SIGNAL(resetEulerGraphScoreRequest()));
+    QObject::connect(ui->EGInformationButton, SIGNAL(released()), this, SIGNAL(ScoreInfromation()));//////////////////////
+    //////////////// Wir haben ein neues Push Button erstellt und sein
+    /// Text ist EG ScoreInformation und sein Pin name ist EGInformationButton
 }
 
 EulerGraphsInfoAndOptionsWidget::~EulerGraphsInfoAndOptionsWidget()

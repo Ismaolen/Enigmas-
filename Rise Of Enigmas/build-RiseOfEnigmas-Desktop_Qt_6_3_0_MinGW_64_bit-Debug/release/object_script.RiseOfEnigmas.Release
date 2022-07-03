@@ -4,6 +4,7 @@ release/edgeshape.o
 release/egscene.o
 release/eulergraphinteract.o
 release/vertex.o
+release/eulergraphspage.o
 release/main.o
 release/mainwindow.o
 release/congradulationdialog.o
@@ -21,6 +22,7 @@ release/moc_edgeshape.o
 release/moc_egscene.o
 release/moc_eulergraphinteract.o
 release/moc_vertex.o
+release/moc_eulergraphspage.o
 release/moc_mainwindow.o
 release/moc_congradulationdialog.o
 release/moc_congradulationlabel.o
