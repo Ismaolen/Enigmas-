@@ -1,5 +1,7 @@
 #include "eulergraphinteract.h"
-
+#include <iostream>
+#include <algorithm>
+using namespace std;
 EulerGraphInteract::EulerGraphInteract(QWidget *parent)
     : QGraphicsView(parent)
 {
@@ -66,6 +68,7 @@ void EulerGraphInteract::setGraph(uint stage, const QPair<const QList<Vertex> &,
 
 void EulerGraphInteract::renderEdges()
 {
+
     for(Edge &edg : m_edgesList)
     {
         EdgeShape *currentEdge = new EdgeShape(&m_scene,edg);
@@ -75,10 +78,46 @@ void EulerGraphInteract::renderEdges()
 
 void EulerGraphInteract::renderVertexes()
 {
+    int f = 0;
+    int array[m_vertexesList.size()]; //Arraygröße: Anzahl der Knoten, Zweck: Jedes Element speichert die Kantenanzahl einer Knote
+    array[0] = 0;                     // Erstes Element initialisieren
+        //Schleife zur Ermittlung der Kantenanzahl jeder Knote in dem Graph
+    for(int i = 0; i < m_edgesList.size(); i++){
+        // die aktuelle Knote mit der Anfangsknote einer Kante überprüfen, sind sie gleich, wird der Wert des aktuellen Arrayelement um 1 erhöht
+        if(m_vertexesList[f] == m_edgesList[i].m_theOne){
+        array[f] += 1;
+        }
+        // die aktuelle Knote mit der Endknote einer Kante überprüfen, sind sie gleich, wird der Wert des aktuellen Arrayelement um 1 erhöht
+        if(m_vertexesList[f] == m_edgesList[i].m_theOther){
+        array[f] += 1;
+        }
+        // Überprüfen, ob alle Kanten einer Knote überprüft worden-> zur nächsten Knote gehen und alle ihrer Kanten überprüfen
+        if((i == (m_edgesList.size()-1)) && (f < m_vertexesList.size())){
+        i = -1;
+        f++;
+        array[f] = 0;
+        }
+        // werden alle Knoten überprüft, wird die Schleife abgebrochen
+        if(f == m_vertexesList.size()){
+            break;
+        }
+    }
+
+    int i = 0;
+     //Schleife zur Überprüfung, ob die Kantenanzahl einer Knote ungerade ist
     for(Vertex &ver : m_vertexesList)
     {
-        AdvancedPointShape *currentPoint = new AdvancedPointShape(&m_scene,ver);
+        // Ist die Kantenanzahl einer Knote gerade, wird die aktuelle Knote Schwarz gefärbt
+        if((array[i] % 2) ==  0){
+        AdvancedPointShape *currentPoint = new AdvancedPointShape(&m_scene,ver, QColor( Qt::GlobalColor::black ));
         m_scene.addItem(currentPoint);
+        }
+        // Ist die Kantenanzahl einer Knote ungerade, wird die aktuelle Knote Rot gefärbt
+        else if((array[i] % 2) != 0){
+            AdvancedPointShape *currentPoint = new AdvancedPointShape(&m_scene,ver, QColor( Qt::GlobalColor::red));
+            m_scene.addItem(currentPoint);
+        }
+        i++;
     }
 }
 
