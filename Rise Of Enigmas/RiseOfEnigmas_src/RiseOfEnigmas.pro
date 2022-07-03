@@ -14,6 +14,7 @@ INCLUDEPATH += $$PWD/EulerGraphInteract
 include($$PWD/EulerGraphInteract/EulerGraphInteract.pri)
 
 SOURCES += \
+    eulergraphspage.cpp \
     main.cpp \
     mainwindow.cpp \
     widgets/congradulationdialog.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
     PrivateData.h \
+    eulergraphspage.h \
     mainwindow.h \
     widgets/congradulationdialog.h \
     widgets/congradulationlabel.h \
