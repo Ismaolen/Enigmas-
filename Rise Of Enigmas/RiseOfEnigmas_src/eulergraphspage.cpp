@@ -11,10 +11,11 @@
 #include <iostream>
 using namespace std;
 
+
 EulerGraphsPage::EulerGraphsPage(QWidget *parent)
-    : QScrollArea{parent}
+      : QScrollArea{parent}
 {
-    m_parent = qobject_cast<MainWindow *>(parent);
+    m_parent = qobject_cast<MainWindow*>(parent);
     if(!m_parent)
         return;
 
@@ -34,9 +35,7 @@ EulerGraphsPage::EulerGraphsPage(QWidget *parent)
     EGinfoOptionsWidget->setMagnetModeChecked(!EGclickbyClickMode);
     changeEGMagnetMode(!EGclickbyClickMode);
 
-    // Load game scores from registry
-    QSettings scores(QSettings::UserScope, "Amir Hammoutene", "Rise Of Enigmas");
-    EGscore = scores.value("EulerGraphScore",0).toUInt();
+    EGscore = 0;
     currentGraphNum = EGscore;
     checkButtonsAvailability();
 
@@ -65,42 +64,28 @@ void EulerGraphsPage::resetPage()
 {
     eulerGraph->setGraph(0, QPair< QList<Vertex> , QList<Edge> >());
     EGinfoOptionsWidget->setInstructionsText("");
-    if(!congradulationPopup->isHidden())
+     if(!congradulationPopup->isHidden())
         congradulationPopup->close();
 }
 
 void EulerGraphsPage::refreshShow()
 {
-    if(EulerGraphStageData.contains( currentGraphNum+1 ))
+
+    if(EulerGraphStageData.contains( currentGraphNum+1 ) )
     {
-        if(currentGraphNum < 8){
-
-
         eulerGraph->setGraph(currentGraphNum+1, EulerGraphStageData.value(currentGraphNum+1) );
         eulerGraph->sceneSendStepUpSignal();
     }
-        else if(currentGraphNum == 8){
-            eulerGraph->setGraph(currentGraphNum+1, EulerGraphStageData.value(currentGraphNum+1) );
-            eulerGraph->sceneSendStepUpSignal();
-        }
-        }
     else
     {
-       int isfinisched = 0;
-       for(uint i = 0; i < solvedLevels.size(); i++){
-       if((i+1) == solvedLevels[i]){
-        isfinisched++;
-       }
-       }
-        if(isfinisched == 8)
-        {
+        if(EGtimeChallengeWidget->running)
             EGtimeChallengeWidget->finishChallenge();
+        if(solvedLevels.size() == 8){
         eulerGraph->setGraph(0, QPair< QList<Vertex> , QList<Edge> >());
         EGinfoOptionsWidget->setInstructionsText(tr("You finished all levels, good job!"));
         congradulationPopup->show();
-        }
     }
-
+   }
 }
 
 
@@ -136,7 +121,11 @@ void EulerGraphsPage::finishCreate()
     QObject::connect( eulerGraph, SIGNAL( fullFinishedGraph() ), this, SLOT( setNextEulerGraph() ) );
     QObject::connect( EGinfoOptionsWidget, SIGNAL(chooseEGlineColorRequest()), this, SLOT(chooseEGlineColor()));
     QObject::connect( EGinfoOptionsWidget, SIGNAL(resetEulerGraphScoreRequest()), this, SLOT(resetEulerGraphScore()));
-    QObject::connect( EGinfoOptionsWidget, SIGNAL(ScoreInfromation()), this, SLOT(checkLevelScore()));////////////////////
+
+
+    QObject::connect( EGinfoOptionsWidget, SIGNAL(ScoreInfromation()), this, SLOT(checkLevelScore()));
+
+
     QObject::connect( EGinfoOptionsWidget, SIGNAL( homePageRequest() ), m_parent, SLOT( goToHomehPage() ) );
     QObject::connect( EGinfoOptionsWidget, SIGNAL( magnetModeStateChanged(int) ), this, SLOT( changeEGMagnetMode(int) ) );;
     QObject::connect( EGinfoOptionsWidget, SIGNAL(translateEGInstructionsRequest()), this, SLOT(translateEGInstructions()));
@@ -201,13 +190,7 @@ void EulerGraphsPage::changeEGMagnetMode(int status)
 
 void EulerGraphsPage::EGStepedUp(uint step, uint total)
 {
-    int isfinisched = 0;
-    for(uint i = 0; i < solvedLevels.size(); i++){
-    if((i+1) == solvedLevels[i]){
-     isfinisched++;
-    }
-    }
-    if(isfinisched == 8)
+    if(solvedLevels.size() == 8)
     {
         EGinfoOptionsWidget->setInstructionsText(tr("You finished all levels, good job!"));
         congradulationPopup->show();
@@ -218,7 +201,7 @@ void EulerGraphsPage::EGStepedUp(uint step, uint total)
             +QString::number(eulerGraph->m_scene.m_currentStage);
     if(step == 0)
         text = instructionText+" : "+QString::number(total)+tr(" total edges");
-    else if( isfinisched == 8)
+    else if( step == total)
         text = tr("Level ")+QString::number(eulerGraph->m_scene.m_currentStage)+tr(". Congratulation, you finished it!");
     else
         text = instructionText+tr(". Good beginning! Edge ")+QString::number(step)+"/"+QString::number(total);
@@ -301,7 +284,7 @@ void EulerGraphsPage::goToPreviousGraph()
 {
     if(currentGraphNum <= 0)
     {
-        leftButton->setEnabled(false);// Buttondeaktivierung, falls der aktuelle Graph, der erste Graph ist.
+        leftButton->setEnabled(false);        // Buttondeaktivierung, falls der aktuelle Graph, der erste Graph ist.
         return;
     }
     --currentGraphNum;

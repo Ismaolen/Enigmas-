@@ -79,19 +79,24 @@ void EulerGraphInteract::renderEdges()
 void EulerGraphInteract::renderVertexes()
 {
     int f = 0;
-    int array[m_vertexesList.size()]; //Arraygröße: Anzahl der Knoten, Zweck: Jedes Element speichert die Kantenanzahl einer Knote
-    array[0] = 0;                     // Erstes Element initialisieren
-        //Schleife zur Ermittlung der Kantenanzahl jeder Knote in dem Graph
+    //Arraygröße: Anzahl der Knoten, Zweck: Jedes Element speichert die Kantenanzahl einer Knote
+    int array[m_vertexesList.size()];
+    // Erstes Element initialisieren
+    array[0] = 0;
+    //Schleife zur Ermittlung der Kantenanzahl jeder Knote in dem Graph
     for(int i = 0; i < m_edgesList.size(); i++){
-        // die aktuelle Knote mit der Anfangsknote einer Kante überprüfen, sind sie gleich, wird der Wert des aktuellen Arrayelement um 1 erhöht
+        // die aktuelle Knote mit der Anfangsknote einer Kante überprüfen,\
+           sind sie gleich, wird der Wert des aktuellen Arrayelement um 1 erhöht
         if(m_vertexesList[f] == m_edgesList[i].m_theOne){
         array[f] += 1;
         }
-        // die aktuelle Knote mit der Endknote einer Kante überprüfen, sind sie gleich, wird der Wert des aktuellen Arrayelement um 1 erhöht
+        // die aktuelle Knote mit der Endknote einer Kante überprüfen, sind sie gleich,\
+           wird der Wert des aktuellen Arrayelement um 1 erhöht
         if(m_vertexesList[f] == m_edgesList[i].m_theOther){
         array[f] += 1;
         }
-        // Überprüfen, ob alle Kanten einer Knote überprüft worden-> zur nächsten Knote gehen und alle ihrer Kanten überprüfen
+        // Überprüfen, ob alle Kanten einer Knote überprüft worden-> zur nächsten Knote gehen und alle\
+           ihrer Kanten überprüfen
         if((i == (m_edgesList.size()-1)) && (f < m_vertexesList.size())){
         i = -1;
         f++;
@@ -102,7 +107,6 @@ void EulerGraphInteract::renderVertexes()
             break;
         }
     }
-
     int i = 0;
      //Schleife zur Überprüfung, ob die Kantenanzahl einer Knote ungerade ist
     for(Vertex &ver : m_vertexesList)

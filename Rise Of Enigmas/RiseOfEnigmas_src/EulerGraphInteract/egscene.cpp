@@ -44,7 +44,7 @@ void EGScene::appendEdgeShape(EdgeShape *point)
 {
     m_edgesShapesList.append(point);
 }
-///
+
 /// \brief EGScene::resetDrawing // dabei haben wir zwei resetOptionen, das erste ist alle Kantenbelgegungen zu löschen, das zweite ist nur die letzte Kantenbelegung zu löschen.
 /// \param allOrOne: löschng alle Kantenbelegungen falls 1 wenn 2 nur das letzte Kantenbelgung Löschen
 void EGScene::resetDrawing(int allOrLast)
@@ -56,16 +56,21 @@ void EGScene::resetDrawing(int allOrLast)
          m_currentLine = 0;         //  der Line auf der Anfang setzten
     }
     else if(allOrLast == 2){
-        int sizeabsteigend = (m_lineList.size()-1); // size -1 um auf den letzten Elemnt zugreifen zu können
-        if(!m_lineList.empty()){       // nur falls m_lineList nicht leer ist
-            //  die x und y Koordinaten der Anfangsknote der zu löschenden Kantenbelegung speichern, damit der Spieler bei den gespeicherten Koortdinaten anfängt.
-            x_firtsVertexDeletedLine = m_edgesDrawnList[sizeabsteigend].m_theOne.m_x;
-            y_firtsVertexDeletedLine = m_edgesDrawnList[sizeabsteigend].m_theOne.m_y;
-            delete m_lineList[sizeabsteigend]; // die letzte angezeigte Line löschen
-            m_lineList.erase(m_lineList.cbegin()+sizeabsteigend);   //  angezeigte Line aus der Liste entfernen
-            m_edgesDrawnList.erase(m_edgesDrawnList.cbegin()+sizeabsteigend);   // Entfernung der Belgung der Kante aus der Edges Liste
-        }
-         m_currentLine = sizeabsteigend; // Die aktuelle Line auf das vor Letzte Line setzen
+
+
+
+            int sizeabsteigend = (m_lineList.size()-1); //Size -1 um auf das letzte Element zugreifen zu können.
+            if(!m_lineList.empty()){  // Nur falls m_lineList nicht leer ist.
+                //  Die x und y Koordinaten der Anfangsknote der zu löschenden Kantenbelegung speichern,
+                //  damit der Spieler mit den gespeicherten Koortdinaten anfängt.
+                x_firtsVertexDeletedLine = m_edgesDrawnList[sizeabsteigend].m_theOne.m_x;
+                y_firtsVertexDeletedLine = m_edgesDrawnList[sizeabsteigend].m_theOne.m_y;
+                delete m_lineList[sizeabsteigend]; // Die letzte angezeigte Linie löschen.
+                m_lineList.erase(m_lineList.cbegin()+sizeabsteigend); // Angezeigte Linie aus der Liste entfernen.
+                // Entfernung der Belegung der Kante aus der Edgesliste.
+                m_edgesDrawnList.erase(m_edgesDrawnList.cbegin()+sizeabsteigend);
+            }
+            m_currentLine = sizeabsteigend; // Die aktuelle Belegung der Kante auf das vorletzte Linie setzen.
     }
     if( tempDrawingLine!= nullptr)
     {
